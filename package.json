@@ -11,14 +11,18 @@
     "type-check": "vue-tsc --build --force"
   },
   "dependencies": {
+    "@popperjs/core": "^2.11.8",
+    "alpinejs": "^3.13.5",
+    "autoprefixer": "^10.4.17",
     "bootstrap-icons": "^1.11.3",
-    "vue": "^3.4.15",
+    "vue": "^3.4.19",
     "vue-burger-menu": "^2.0.5",
     "vue-router": "^4.2.5",
     "vuetify": "^3.5.4"
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.2",
+    "@types/alpinejs": "^3.13.6",
     "@types/node": "^20.11.10",
     "@vitejs/plugin-vue": "^5.0.3",
     "@vue/tsconfig": "^0.5.1",

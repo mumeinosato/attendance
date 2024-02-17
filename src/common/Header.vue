@@ -1,5 +1,5 @@
 <template>
-  <header class="z-10 py-4 bg-white shadow-md dark:bg-gray-800">
+  <header class="z-10 py-4 bg-white shadow-md dark:bg-gray-800 fixed top-0 left-0 right-0">
     <div
       class="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300"
     >
@@ -254,30 +254,3 @@
     </div>
   </header>
 </template>
-
-<script>
-export default {
-  data() {
-    return {
-      title: "ヘッダー",
-      isMobile: false,
-      drawer: false,
-    };
-  },
-  mounted() {
-    this.checkMobile();
-    window.addEventListener("resize", this.checkMobile);
-  },
-  beforeDestroy() {
-    window.removeEventListener("resize", this.checkMobile);
-  },
-  methods: {
-    checkMobile() {
-      this.isMobile = window.innerWidth < 768;
-    },
-  },
-};
-</script>
-    
-    <style scoped>
-</style>

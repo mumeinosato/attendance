@@ -1,5 +1,6 @@
 import './assets/style/main.scss'
 import './assets/style/tailwind.scss'
+import './assets/style/tailwind.output.scss'
 import Alpine from 'alpinejs'
 
 import { createApp } from 'vue'

@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Notice from '../views/Notice.vue'
 import Attendance from '../views/Attendance.vue'
 import Assignment from '../views/Assignment.vue'
+import Login from '../views/Login.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -20,6 +21,11 @@ const router = createRouter({
       path: '/task',
       name: 'task',
       component: Assignment
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login
     },
     {
       path: '/about',

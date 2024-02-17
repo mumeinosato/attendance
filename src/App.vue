@@ -3,7 +3,7 @@ import { RouterLink, RouterView } from "vue-router";
 import Header from "./common/Header.vue";
 import Footer from "./common/Footer.vue";
 import Sidebar from "./common/Sidebar.vue";
-import "vuetify/dist/vuetify.min.css"; 
+//import "vuetify/dist/vuetify.min.css"; 
 
 </script>
 
@@ -23,10 +23,12 @@ import "vuetify/dist/vuetify.min.css";
     <!-- Mobile sidebar -->
     <!-- Backdrop -->
     <!--未作成-->
-    <div class="flex flex-col flex-1 w-full">
+    <div class="flex flex-col flex-1 w-full h-full">
       <Header />
-      <main class="h-full overflow-y-auto ml-64">
-        <RouterView />
+      <main class="ml-64 mt-16">
+        <div class="overflow-y-auto">
+          <RouterView />
+        </div>
       </main>
     </div>
   </div>

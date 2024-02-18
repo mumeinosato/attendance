@@ -30,6 +30,7 @@
                 <input
                   class="block w-full mt-1 text-sm boder dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                   placeholder="j114514"
+                  v-model="username"
                 />
               </label>
               <label class="block mt-4 text-sm text-left">
@@ -53,30 +54,50 @@
 </template>
 
 <script>
-import { ref } from "vue";
-//import { authenticate } from '../script/account/auth';
-
+import { ref } from 'vue'
+import { check } from '../script/account/login'
 
 export default {
-    name : 'Login',
-    data () {
-        return {
-            loginId: '',
-            password: '',
-            errorMessage: ''
-        };
-    },
-    methods : {
-        async performLogin(){
-            try {
-                const result = await authenticate(this.loginId, this.password);
+  data() {
+    return {
+      username: '' // 入力フィールドの値を保持するデータ
+    };
+  },
 
-                console.log(result);
-            } catch (error) {
-                console.error(error);
-                this.errorMessage = error.message;
-            }
-        },
+  // コンポーネントの他の設定を追加
+
+  methods: {
+    async login() {
+      try {
+        // 入力フィールドの値を引数としてcallCheckFunctionを呼び出す
+        await this.callCheckFunction(this.username);
+      } catch (error) {
+        console.error('ログイン時にエラーが発生しました:', error);
+      }
+    },
+
+    async callCheckFunction(user) {
+      try {
+        const status = await check(user);
+        // ステータスコードに基づいて処理を行う
+        switch (status) {
+          case 0:
+            alert('ユーザーが存在しません');
+            break;
+          case 1:
+            this.$router.push('/signup');
+            break;
+          case 2:
+            console.log('パスワードがnullではありません');
+            break;
+          default:
+            alert('不明なステータスコードです');
+            break;
+        }
+      } catch (error) {
+        console.error('エラーが発生しました:', error);
+      }
     }
+  }
 };
 </script>

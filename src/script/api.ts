@@ -36,6 +36,7 @@ export async function getAccountInfo(user: string): Promise<any> {
 }
 
 export async function setPassword(user: string, password: string): Promise<void> {
+  console.log(user, password);
   try {
     await axios.post(`${API_URL}/setPassword`, { user, password });
   } catch (error) {

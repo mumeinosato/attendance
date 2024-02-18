@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import store from '../store'
 import Notice from '../views/Notice.vue'
 import Attendance from '../views/Attendance.vue'
 import Assignment from '../views/Assignment.vue'
@@ -11,27 +12,32 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: Notice
+      component: Notice,
+      meta: { requiresAuth: true }
     },
     {
       path: '/attendance',
       name: 'attendance',
-      component: Attendance
+      component: Attendance,
+      meta: { requiresAuth: true }
     },
     {
       path: '/task',
       name: 'task',
-      component: Assignment
+      component: Assignment,
+      meta: { requiresAuth: true }
     },
     {
       path: '/login',
       name: 'login',
-      component: Login
+      component: Login,
+      meta: { requiresAuth: false }
     },
     {
       path: '/signup',
       name: 'signup',
-      component: Signup
+      component: Signup,
+      meta: { requiresAuth: false }
     },
     {
       path: '/about',
@@ -42,6 +48,16 @@ const router = createRouter({
       component: () => import('../views/AboutView.vue')
     }
   ]
-})
+});
+
+router.beforeEach((to, from, next) => {
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+  const isLoggedIn = store.state.isLoggedIN;
+  if (requiresAuth && !isLoggedIn) {
+    next('/login');
+  } else {
+    next();
+  }
+});
 
 export default router

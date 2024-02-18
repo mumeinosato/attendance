@@ -31,6 +31,7 @@
                   class="block w-full mt-1 text-sm boder dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                   placeholder="j114514"
                   v-model="username"
+                  required
                 />
               </label>
               <label class="block mt-4 text-sm text-left">
@@ -39,6 +40,8 @@
                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                   placeholder="***************"
                   type="password"
+                  v-model="password"
+                  required
                 />
               </label>
 
@@ -60,7 +63,8 @@ import { check } from '../script/account/login'
 export default {
   data() {
     return {
-      username: '' // 入力フィールドの値を保持するデータ
+      username: '', // 入力フィールドの値を保持するデータ
+      password: '' // パスワードを保持するデータ
     };
   },
 
@@ -79,6 +83,7 @@ export default {
     async callCheckFunction(user) {
       try {
         const status = await check(user);
+        console.log(this.$store)
         // ステータスコードに基づいて処理を行う
         switch (status) {
           case 0:
@@ -88,10 +93,24 @@ export default {
             this.$router.push('/signup');
             break;
           case 2:
-            console.log('パスワードがnullではありません');
+            //console.log('パスワードがnullではありません');
+            try {
+              const success = await this.$store.dispatch('loginUser', {
+                username: this.username,
+                password: this.password
+              });
+                if (success) {
+                  this.$router.push('/');
+                } else {
+                  alert('ログインに失敗しました');
+                }
+              } catch (error) {
+                console.error('ログイン時にエラーが発生しました:', error);
+              }
             break;
           default:
             alert('不明なステータスコードです');
+            console.log('ステータスコード:', status);
             break;
         }
       } catch (error) {

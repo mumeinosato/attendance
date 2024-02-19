@@ -11,6 +11,7 @@ const state = reactive({
 const actions = {
     async loginUser({commit}: any, {user, password}: any) {
         try {
+            console.log(user);
             const success = await login(user, password);
             if (success) {
                 commit('setIsLoggedIn', true);

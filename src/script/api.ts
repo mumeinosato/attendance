@@ -27,6 +27,7 @@ export async function login(user: string, password: string): Promise<boolean> {
 
 export async function getAccountInfo(user: string): Promise<any> {
   try {
+    console.log(`${API_URL}/accountInfo/${user}`);
     const response = await axios.get(`${API_URL}/accountInfo/${user}`);
     return response.data;
   } catch (error) {

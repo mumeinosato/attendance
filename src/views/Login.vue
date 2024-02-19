@@ -96,7 +96,7 @@ export default {
             //console.log('パスワードがnullではありません');
             try {
               const success = await this.$store.dispatch('loginUser', {
-                username: this.username,
+                user: this.username,
                 password: this.password
               });
                 if (success) {

@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import { setPassword } from "../script/account/setpass";
+import { setPass } from "../script/account/setpass";
 
 export default {
   data() {
@@ -79,7 +79,7 @@ export default {
   methods: {
     async setPassword() {
       if (this.password === this.check_password) {
-        const status = await setPassword(this.username, this.password);
+        const status = await setPass(this.username, this.password);
         if (status === true) {
           this.$router.push("/login");
         } else {

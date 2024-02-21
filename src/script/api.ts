@@ -55,3 +55,13 @@ export async function userExists(user: string): Promise<boolean> {
     throw error;
   }
 }
+
+export async function accountList(): Promise<any> {
+  try {
+    const response = await axios.get(`${API_URL}/accountList`);
+    return response.data;
+  } catch (error) {
+    console.error('Error executing query:', error);
+    throw error;
+  }
+}

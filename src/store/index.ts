@@ -3,9 +3,18 @@ import createPersistedState from 'vuex-persistedstate';
 import { reactive } from 'vue'; 
 import { login, getAccountInfo } from "../script/api";
 
+const getDefaultUserData = () => ({
+    id: null,
+    user: "null",
+    name: "null",
+    password: "null",
+    admin: 0,
+    group: "fffff"
+});
+
 const state = reactive({
     isLoggedIN: false,
-    userData:  null,
+    userData:  getDefaultUserData(),
 });
 
 const actions = {
@@ -25,7 +34,7 @@ const actions = {
     },
     logoutUser({commit}: any) {
         commit('setIsLoggedIn', false);
-        commit('setUserData', null);
+        commit('setUserData', getDefaultUserData());
     },
 };
 

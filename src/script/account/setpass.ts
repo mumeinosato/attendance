@@ -1,6 +1,6 @@
-import { getPasswordNull } from "../api"; 
+import { getPasswordNull, setPassword } from "../api"; 
 
-export async function setPassword(user: string, password: string): Promise<boolean> {
+export async function setPass(user: string, password: string): Promise<boolean> {
     let status = true;
     /*
     ステータスコード

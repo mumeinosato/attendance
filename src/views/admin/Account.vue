@@ -49,9 +49,13 @@
         </div>
       </div>
       <div class="flex justify-end">
-        <button class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">作成</button>
+        <button
+          class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+        >
+          作成
+        </button>
       </div>
-    </div>  
+    </div>
 
     <div class="w-full overflow-hidden rounded-lg shadow-xs mb-10">
       <div class="w-full overflow-x-auto">
@@ -62,6 +66,7 @@
             >
               <th class="px-4 py-3">名前</th>
               <th class="px-4 py-3">ID</th>
+              <th class="px-4 py-3">部門</th>
               <th class="px-4 py-3">出席数</th>
               <th class="px-4 py-3">欠席数</th>
               <th class="px-4 py-3">Actions</th>
@@ -70,18 +75,66 @@
           <tbody
             class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800 text-left"
           >
-            <tr class="text-gray-700 dark:text-gray-400" v-for="account in accounts" :key="account.user">
+            <tr
+              class="text-gray-700 dark:text-gray-400"
+              v-for="account in accounts"
+              :key="account.user"
+            >
               <td class="px-4 py-3">
                 <div class="flex items-center text-sm">
                   <div>
                     <p class="font-semibold">{{ account.name }}</p>
-                    <p class="text-xs text-gray-600 dark:text-gray-400" v-if="account.admin === 1">
+                    <p
+                      class="text-xs text-gray-600 dark:text-gray-400"
+                      v-if="account.admin === 1"
+                    >
                       管理者
                     </p>
                   </div>
                 </div>
-              </td>  
+              </td>
               <td class="px-4 py-3">{{ account.user }}</td>
+              <td>
+                <template v-if="account.group[0] === 't'"
+                  >競技プロ</template
+                >
+                <template v-if="account.group[1] === 't'">
+                  <span v-if="account.group[0] === 't'">|</span>
+                  アプリ</template
+                >
+                <template v-if="account.group[2] === 't'">
+                  <span
+                    v-if="
+                      account.group[0] === 't' || account.group[1] === 't'
+                    "
+                    >|</span
+                  >
+                  CG</template
+                >
+                <template v-if="account.group[3] === 't'">
+                  <span
+                    v-if="
+                      account.group[0] === 't' ||
+                      account.group[1] === 't' ||
+                      account.group[2] === 't'
+                    "
+                    >|</span
+                  >
+                  映像</template
+                >
+                <template v-if="account.group[4] === 't'">
+                  <span
+                    v-if="
+                      account.group[0] === 't' ||
+                      account.group[1] === 't' ||
+                      account.group[2] === 't' ||
+                      account.group[3] === 't'
+                    "
+                    >|</span
+                  >
+                  芸術</template
+                >
+              </td>
               <td class="px-4 py-3">{{ account.attendance }}</td>
               <td class="px-4 py-3">{{ account.absence }}</td>
               <!--<td class="px-4 py-3">
@@ -147,7 +200,7 @@
   </div>
 </template>
 <script>
-import { accountList } from '../../script/api';
+import { accountList } from "../../script/api";
 
 export default {
   data() {
@@ -166,7 +219,6 @@ export default {
         console.error(error);
       }
     },
-  }
-}
-
+  },
+};
 </script>

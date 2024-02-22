@@ -12,12 +12,14 @@
         <input
           class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
           placeholder="j114514"
+          v-model="userid"
         />
         <p class="mt-2"></p>
         <span class="text-gray-700 dark:text-gray-400">名前</span>
         <input
           class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
           placeholder="ヨシフ・ベサリオニス・ジュガシヴィリ"
+          v-model="username"
         />
       </label>
 
@@ -31,7 +33,8 @@
               type="radio"
               class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
               name="adminType"
-              value="admin"
+              value="1"
+              v-model="admin"
             />
             <span class="ml-2">はい</span>
           </label>
@@ -42,15 +45,35 @@
               type="radio"
               class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
               name="adminType"
-              value="no_admin"
+              value="0"
+              v-model="admin"
             />
             <span class="ml-2">いいえ</span>
           </label>
         </div>
       </div>
+      <div class="mt-4 text-sm text-left">
+        <span class="text-gray-700 dark:text-gray-400">部門</span>
+        <div class="mt-2">
+        <label
+          v-for="(groupType, index) in groupTypes"
+          :key="index"
+          class="inline-flex items-center text-gray-600 dark:text-gray-400"
+        >
+          <input
+            type="checkbox"
+            class="text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+            :value="groupType.value"
+            v-model="selectedGroups"
+          />
+          <span class="ml-2">{{ groupType.label }}</span>
+        </label>
+        </div>
+      </div>
       <div class="flex justify-end">
         <button
           class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+          @click="createAccount"
         >
           作成
         </button>
@@ -200,12 +223,23 @@
   </div>
 </template>
 <script>
-import { accountList } from "../../script/api";
+import { accountList, createUser } from "../../script/api";
 
 export default {
   data() {
     return {
       accounts: [],
+      userid: "",
+      username: "",
+      admin: "0",
+      selectedGroups: [],
+      groupTypes: [
+        { label: "競技プロ", value: "programming" },
+        { label: "アプリ", value: "app" },
+        { label: "CG", value: "cg" },
+        { label: "映像", value: "image" },
+        { label: "芸術", value: "art" },
+      ],
     };
   },
   async created() {
@@ -219,6 +253,28 @@ export default {
         console.error(error);
       }
     },
+    async createAccount() {
+      if(this.userid === "" || this.username === "") {
+        alert("IDと名前は必須です");
+        return;
+      }
+      try {
+        const selsectString = this.groupTypes.map(groupTypes => {
+          return this.selectedGroups.includes(groupTypes.value) ? 't' : 'f';
+        }).join('').substring(0, 5);
+
+        console.log(selsectString);
+
+        await createUser(this.userid, this.username, this.admin, selsectString);
+        alert("アカウントを作成しました");
+        this.userid = "";
+        this.username = "";
+        this.admin = "0";
+        this.selectedGroups = [];
+      }catch (error) {
+        console.error(error);
+      }
+    },  
   },
 };
 </script>

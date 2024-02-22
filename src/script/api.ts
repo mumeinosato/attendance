@@ -65,3 +65,12 @@ export async function accountList(): Promise<any> {
     throw error;
   }
 }
+
+export async function createUser(user: string, name: string, admin: number, group: string): Promise<void> {
+  try {
+    await axios.post(`${API_URL}/createUser`, { user, name, admin, group });
+  } catch (error) {
+    console.error('Error executing query:', error);
+    throw error;
+  }
+}

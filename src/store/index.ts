@@ -21,12 +21,8 @@ const actions = {
     async loginUser({commit}: any, {user, password}: any) {
         try {
             console.log(user);
-            const success = await login(user, password);
-            if (success) {
                 commit('setIsLoggedIn', true);
                 commit('setUserData', await getAccountInfo(user));
-            }
-            return success;
         } catch (error) {
             console.error('Error executing query:', error);
             throw error;

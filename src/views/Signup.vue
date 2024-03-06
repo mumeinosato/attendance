@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import { setPass } from "../script/account/setpass";
+import { setPassword } from '../script/api';
 
 export default {
   data() {
@@ -79,11 +79,20 @@ export default {
   methods: {
     async setPassword() {
       if (this.password === this.check_password) {
-        const status = await setPass(this.username, this.password);
-        if (status === true) {
-          this.$router.push("/login");
-        } else {
-          alert("すでにパスワードは設定されています");
+        const status = await setPassword(this.username, this.password);
+        switch (status){
+          case 0:
+            alert("パスワードを設定しました");
+            this.$router.push("/login");
+            break;
+          case 1:
+            alert("ユーザーが存在しません");
+            break;
+          case 2:
+            alert("すでにパスワードが設定されています");
+            break;
+          default:
+            alert("エラーが発生しました");
         }
       } else {
         alert("パスワードが一致しません");

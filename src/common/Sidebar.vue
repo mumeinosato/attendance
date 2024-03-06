@@ -149,7 +149,7 @@
             </a>
           </li>
           <li class="relative px-6 py-3">
-            <div v-if="$route.path === '/task'">
+            <div v-if="$route.path === '/admin/attendance'">
               <span
                 class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
                 aria-hidden="true"
@@ -158,11 +158,11 @@
             <a
               :class="{
                 'inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100':
-                  $route.path === '/task',
+                  $route.path === '/admin/attendance',
                 'inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200':
-                  $route.path !== '/task',
+                  $route.path !== '/admin/attendance',
               }"
-              href="/task"
+              href="/admin/attendance"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

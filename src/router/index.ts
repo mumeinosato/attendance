@@ -6,6 +6,7 @@ import Assignment from '../views/Assignment.vue'
 import Login from '../views/Login.vue'
 import Signup from '../views/Signup.vue'
 import Account from '../views/admin/Account.vue'
+import Admin_Attendance from '../views/admin/Attendance.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -44,6 +45,12 @@ const router = createRouter({
       path: '/admin/account',
       name: 'account',
       component: Account,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/admin/attendance',
+      name: 'admin_attendance',
+      component: Admin_Attendance,
       meta: { requiresAuth: true }
     },
     {

@@ -37,9 +37,10 @@ export async function getAccountInfo(user: string): Promise<any> {
 }
 
 export async function setPassword(user: string, password: string): Promise<void> {
-  console.log(user, password);
   try {
-    await axios.post(`${API_URL}/setPassword`, { user, password });
+    const response = await axios.post(`${API_URL}/setPassword`, { user, password });
+    console.log(response.data);
+    return response.data;
   } catch (error) {
     console.error('Error executing query:', error);
     throw error;
@@ -69,6 +70,16 @@ export async function accountList(): Promise<any> {
 export async function createUser(user: string, name: string, admin: number, group: string): Promise<void> {
   try {
     await axios.post(`${API_URL}/createUser`, { user, name, admin, group });
+  } catch (error) {
+    console.error('Error executing query:', error);
+    throw error;
+  }
+}
+
+export async function attendance(user: string, status: number, reason: string): Promise<void> {
+  console.log(user, status, reason);
+  try {
+    await axios.post(`${API_URL}/attendance`, { user, status, reason});
   } catch (error) {
     console.error('Error executing query:', error);
     throw error;

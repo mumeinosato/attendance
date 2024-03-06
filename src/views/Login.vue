@@ -59,6 +59,7 @@
 <script>
 import { ref } from 'vue'
 import { check } from '../script/account/login'
+import { login } from '../script/api'
 
 export default {
   data() {
@@ -73,50 +74,34 @@ export default {
   methods: {
     async login() {
       try {
-        // 入力フィールドの値を引数としてcallCheckFunctionを呼び出す
-        await this.callCheckFunction(this.username);
+        const status = await login(this.username, this.password);
+        try{
+          // ステータスコードに基づいて処理を行う
+          switch (status) {
+            case 1:
+              alert('ユーザーが存在しません');
+              break;
+            case 3:
+              this.$router.push('/signup');
+              break;
+            case 2:
+              alert('パスワードが違います');
+              break;
+            case 0:
+              this.$router.push('/');
+              break;  
+            default:
+              alert('不明なステータスコードです');
+              console.log('ステータスコード:', status);
+              break;
+          }
+        } catch (error) {
+          console.error('エラーが発生しました:', error);
+        }
       } catch (error) {
         console.error('ログイン時にエラーが発生しました:', error);
       }
     },
-
-    async callCheckFunction(user) {
-      try {
-        const status = await check(user);
-        console.log(this.$store)
-        // ステータスコードに基づいて処理を行う
-        switch (status) {
-          case 0:
-            alert('ユーザーが存在しません');
-            break;
-          case 1:
-            this.$router.push('/signup');
-            break;
-          case 2:
-            //console.log('パスワードがnullではありません');
-            try {
-              const success = await this.$store.dispatch('loginUser', {
-                user: this.username,
-                password: this.password
-              });
-                if (success) {
-                  this.$router.push('/');
-                } else {
-                  alert('ログインに失敗しました');
-                }
-              } catch (error) {
-                console.error('ログイン時にエラーが発生しました:', error);
-              }
-            break;
-          default:
-            alert('不明なステータスコードです');
-            console.log('ステータスコード:', status);
-            break;
-        }
-      } catch (error) {
-        console.error('エラーが発生しました:', error);
-      }
-    }
   }
 };
 </script>

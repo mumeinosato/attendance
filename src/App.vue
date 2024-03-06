@@ -5,6 +5,8 @@ import Footer from "./common/Footer.vue";
 import Sidebar from "./common/Sidebar.vue";
 //import "vuetify/dist/vuetify.min.css"; 
 
+import { mapActions, mapState } from "vuex";
+
 </script>
 
 <template>
